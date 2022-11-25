@@ -1,6 +1,8 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import cn from 'classnames';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Fragment, ReactNode } from 'react';
 
 import { useLogoutMutation } from '../apollo/hooks';
@@ -12,11 +14,10 @@ const user = {
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 };
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
-  { name: 'Reports', href: '#', current: false },
+  { name: 'Workspaces', href: '/workspaces' },
+  { name: 'Dashboard', href: '/dashboard' },
+  { name: 'Team', href: '/team' },
+  { name: 'Tasks', href: '/tasks' },
 ];
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
@@ -29,6 +30,11 @@ interface MainLayoutProps {
 }
 
 const MainLayout = ({ children }: MainLayoutProps) => {
+  const { pathname } = useRouter();
+
+  const isCurrentRoute = (link: string) => {
+    return pathname.includes(link);
+  };
   return (
     <div className="min-h-full">
       <Disclosure as="nav" className="bg-gray-800">
@@ -47,21 +53,26 @@ const MainLayout = ({ children }: MainLayoutProps) => {
                   <div className="hidden md:block">
                     <div className="ml-10 flex items-baseline space-x-4">
                       {navigation.map((item) => (
-                        <a
+                        <Link
                           key={item.name}
                           href={item.href}
+                          passHref
                           className={cn(
                             'rounded-md px-3 py-2 text-sm font-medium',
                             {
-                              'bg-gray-900 text-white': item.current,
+                              'bg-gray-900 text-white': isCurrentRoute(
+                                item.href
+                              ),
                               'text-gray-300 hover:bg-gray-700 hover:text-white':
-                                !item.current,
+                                !isCurrentRoute(item.href),
                             }
                           )}
-                          aria-current={item.current ? 'page' : undefined}
+                          aria-current={
+                            isCurrentRoute(item.href) ? 'page' : undefined
+                          }
                         >
                           {item.name}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
@@ -139,17 +150,19 @@ const MainLayout = ({ children }: MainLayoutProps) => {
                 {navigation.map((item) => (
                   <Disclosure.Button
                     key={item.name}
-                    as="a"
+                    as={Link}
                     href={item.href}
                     className={cn(
                       'block rounded-md px-3 py-2 text-base font-medium',
                       {
-                        'bg-gray-900 text-white': item.current,
+                        'bg-gray-900 text-white': isCurrentRoute(item.href),
                         'text-gray-300 hover:bg-gray-700 hover:text-white':
-                          !item.current,
+                          !isCurrentRoute(item.href),
                       }
                     )}
-                    aria-current={item.current ? 'page' : undefined}
+                    aria-current={
+                      isCurrentRoute(item.href) ? 'page' : undefined
+                    }
                   >
                     {item.name}
                   </Disclosure.Button>
@@ -206,12 +219,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         </div>
       </header>
       <main>
-        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-          {/* Replace with your content */}
-
-          {children}
-          {/* /End replace */}
-        </div>
+        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">{children}</div>
       </main>
     </div>
   );

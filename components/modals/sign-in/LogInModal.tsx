@@ -2,19 +2,19 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useLoginMutation } from '../../../apollo/hooks';
-import { Button, Input, Modal, PasswordInput } from '../../common';
+import { Button, Input, Modal } from '../../common';
 
 interface SignInModalProps {
   open: boolean;
+  onOpen: (open: boolean) => void;
 }
 interface LogInValues {
   email: string;
   password: string;
 }
 
-const LogInModal = ({ open }: SignInModalProps) => {
-  const [, setOpen] = useState(true);
-  const [login] = useLoginMutation();
+const LogInModal = ({ open, onOpen }: SignInModalProps) => {
+  const [login, { data }] = useLoginMutation();
   const { register, handleSubmit } = useForm<LogInValues>({
     defaultValues: {
       email: '',
@@ -23,8 +23,6 @@ const LogInModal = ({ open }: SignInModalProps) => {
   });
 
   const onSubmit = (data: LogInValues) => {
-    console.log('data', data);
-
     login({
       variables: {
         email: data.email,
@@ -34,10 +32,15 @@ const LogInModal = ({ open }: SignInModalProps) => {
   };
 
   return (
-    <Modal open={open} onOpen={setOpen} title="Sign In">
+    <Modal open={open} onOpen={onOpen} title="Sign In">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Input label="Email" {...register('email')} />
-        <PasswordInput label="Password" {...register('password')} />
+        <Input fullWidth label="Email" {...register('email')} />
+        <Input
+          fullWidth
+          type="password"
+          label="Password"
+          {...register('password')}
+        />
         <Button rounded="md" fullWidth type="submit">
           Sign In
         </Button>

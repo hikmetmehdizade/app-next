@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 
 import { useLogoutMutation } from '../apollo/hooks';
-import { Button, Dropdown, Input, PasswordInput } from '../components/common';
+import { Button, Dropdown, Input } from '../components/common';
 import { LogInModal } from '../components/modals';
 
 const Home: NextPage = () => {
@@ -12,11 +12,15 @@ const Home: NextPage = () => {
 
   return (
     <div className="flex flex-col">
-      <Input label="Price" />
+      <Input label="Price" placeholder="Enter price" type="number" />
       <Input label="Price" disabled />
-      <LogInModal open={openModal} />
+      <LogInModal open={openModal} onOpen={(val) => setOpenModal(val)} />
 
-      <PasswordInput label="Password" />
+      <Input
+        type="password"
+        label="Password"
+        placeholder="Enter your password"
+      />
       <Button onClick={() => setOpenModal((prev) => !prev)}>Sign in</Button>
       <Button btnType="secondary" onClick={() => logout()}>
         Logout

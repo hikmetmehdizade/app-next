@@ -1,8 +1,9 @@
 import { ApolloProvider } from '@apollo/client';
 import { Inter } from '@next/font/google';
 import type { AppProps } from 'next/app';
+import dynamic from 'next/dynamic';
 
-import client from '../apollo';
+import { useApollo } from '../apollo';
 import MainLayout from '../layouts/main';
 import '../styles/globals.css';
 
@@ -12,9 +13,10 @@ const inter = Inter({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const apolloClient = useApollo(pageProps.initialApolloState);
   return (
     <main className={`${inter.variable} font-sans`}>
-      <ApolloProvider client={client}>
+      <ApolloProvider client={apolloClient}>
         <MainLayout>
           <Component {...pageProps} />
         </MainLayout>
@@ -23,4 +25,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default dynamic(() => Promise.resolve(MyApp), {
+  ssr: false,
+});
