@@ -11,12 +11,6 @@ import { NextPageContext } from 'next';
 export const APOLLO_STATE_PROP_NAME = 'apolloState';
 
 export function createApolloClient(ctx?: NextPageContext) {
-  let cookie = '';
-
-  if (ctx && ctx.req?.headers.cookie) {
-    cookie = ctx.req?.headers.cookie;
-  }
-
   const httpLink = createHttpLink({
     uri: 'http://localhost:4001/graphql',
     credentials: 'include',
@@ -33,15 +27,8 @@ export function createApolloClient(ctx?: NextPageContext) {
     if (networkError) console.log(`[Network error]: ${networkError}`);
   });
 
-  const authLink = setContext((_, { headers }) => {
-    return {
-      ...headers,
-      Cookie: cookie,
-    };
-  });
-
   return new ApolloClient({
-    link: from([errorLink, authLink, httpLink]),
+    link: from([errorLink, httpLink]),
     cache: new InMemoryCache(),
     ssrMode: typeof window === 'undefined',
     defaultOptions: {
@@ -58,6 +45,7 @@ export function createApolloClient(ctx?: NextPageContext) {
         errorPolicy: 'all',
       },
     },
+    credentials: 'include',
   });
 }
 

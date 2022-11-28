@@ -1,10 +1,13 @@
 import { ApolloProvider } from '@apollo/client';
 import { Inter } from '@next/font/google';
+import { appWithTranslation } from 'next-i18next';
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 
 import { useApollo } from '../apollo';
 import MainLayout from '../layouts/main';
+import nextI18Config from '../next-i18next.config';
+import { AuthProvider } from '../providers';
 import '../styles/globals.css';
 
 const inter = Inter({
@@ -17,14 +20,19 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <main className={`${inter.variable} font-sans`}>
       <ApolloProvider client={apolloClient}>
-        <MainLayout>
-          <Component {...pageProps} />
-        </MainLayout>
+        <AuthProvider>
+          <MainLayout>
+            <Component {...pageProps} />
+          </MainLayout>
+        </AuthProvider>
       </ApolloProvider>
     </main>
   );
 }
 
-export default dynamic(() => Promise.resolve(MyApp), {
-  ssr: false,
-});
+export default dynamic(
+  () => Promise.resolve(appWithTranslation(MyApp, nextI18Config)),
+  {
+    ssr: false,
+  }
+);

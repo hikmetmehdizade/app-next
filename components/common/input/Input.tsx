@@ -5,6 +5,7 @@ import { InputHTMLAttributes, Ref, forwardRef, useId, useState } from 'react';
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   fullWidth?: boolean;
+  errormessage?: string;
 }
 
 const Input = forwardRef(
@@ -39,7 +40,7 @@ const Input = forwardRef(
         />
         {type === 'password' && (
           <button
-            className="absolute bg-transparent right-2 top-1/2 w-fit h-fit "
+            className="absolute bg-transparent right-2 top-1/2 -translate-y-1/2 w-fit h-fit "
             onClick={handleVis}
             type="button"
           >

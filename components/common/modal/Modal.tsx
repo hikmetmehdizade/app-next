@@ -3,7 +3,6 @@ import { XMarkIcon } from '@heroicons/react/20/solid';
 import { ReactNode } from 'react';
 import { Fragment, useRef } from 'react';
 
-
 interface ModalProps {
   children: ReactNode;
   open: boolean;

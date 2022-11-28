@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useLoginMutation } from '../../../apollo/hooks';
-import { Button, Input, Modal } from '../../common';
+import { useLoginMutation } from '../../../../apollo/hooks';
+import { Button, Input, Modal } from '../../../common';
 
 interface SignInModalProps {
   open: boolean;

@@ -6,6 +6,9 @@ export const GET_ME = gql`
   query Me {
     me {
       ...UserFragment
+      currentWorkspace {
+        uuid
+      }
     }
   }
   ${UserFragment}

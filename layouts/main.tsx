@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Fragment, ReactNode } from 'react';
 
-import { useLogoutMutation } from '../apollo/hooks';
+import { useLogoutMutation, useMeQuery } from '../apollo/hooks';
 
 const user = {
   name: 'Tom Cook',
@@ -218,8 +218,10 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           </h1>
         </div>
       </header>
-      <main>
-        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">{children}</div>
+      <main className="bg-neutral-100">
+        <div className="mx-auto max-w-7xl py-6  sm:px-6 lg:px-8">
+          {children}
+        </div>
       </main>
     </div>
   );

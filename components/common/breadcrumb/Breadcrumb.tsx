@@ -6,11 +6,8 @@ export interface BreadcrumbItem {
   link: string;
 }
 
-
 const Breadcrumb = () => {
-    useEffect(() => {}, [])
-
-
+  useEffect(() => {}, []);
 
   return <div>555</div>;
 };
