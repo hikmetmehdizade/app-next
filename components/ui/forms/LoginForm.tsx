@@ -43,37 +43,40 @@ const LoginForm = () => {
       },
       onCompleted: (data) => {
         if (typeof data?.login !== 'undefined') {
-          push(Routes.workspaces());
+          data.login.currentWorkspaceId;
+          push(
+            !data.login.currentWorkspaceId
+              ? Routes.workspaces()
+              : Routes.workspaceDashboard(data.login.currentWorkspaceId)
+          );
         }
       },
     });
   };
 
   return (
-    <div className="max-w-lg">
-      <form
-        className="grid grid-cols-1 auto-rows-max gap-6"
-        onSubmit={handleSubmit(onSubmit)}
-        autoComplete="off"
-      >
-        <Input
-          fullWidth
-          errormessage={errors.email?.message}
-          placeholder={t('common:email')}
-          {...register('email')}
-        />
-        <Input
-          fullWidth
-          type="password"
-          placeholder={t('common:password')}
-          errormessage={errors.password?.message}
-          {...register('password')}
-        />
-        <Button type="submit" rounded="md" fullWidth disabled={!isValid}>
-          Sign In
-        </Button>
-      </form>
-    </div>
+    <form
+      className="grid grid-cols-1 auto-rows-max gap-6"
+      onSubmit={handleSubmit(onSubmit)}
+      autoComplete="off"
+    >
+      <Input
+        fullWidth
+        errormessage={errors.email?.message}
+        placeholder={t('common:email')}
+        {...register('email')}
+      />
+      <Input
+        fullWidth
+        type="password"
+        placeholder={t('common:password')}
+        errormessage={errors.password?.message}
+        {...register('password')}
+      />
+      <Button type="submit" rounded="md" fullWidth disabled={!isValid}>
+        Sign In
+      </Button>
+    </form>
   );
 };
 

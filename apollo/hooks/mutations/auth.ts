@@ -1,9 +1,10 @@
 import { gql, useMutation } from '@apollo/client';
+import { LoginInput, RegistrationInput, RegistrationData, LoginData } from 'api-types';
 
 import { UserFragment } from '../fragments';
 
 export const REGISTRATION = gql`
-  mutation Registration($data: RegistrationInput!) {
+  mutation Registration($data: RegistrationInputType!) {
     registration(data: $data) {
       ...UserFragment
     }
@@ -26,8 +27,9 @@ export const LOGOUT = gql`
   }
 `;
 
-export const useRegistrationMutation = () => useMutation(REGISTRATION);
+export const useRegistrationMutation = () =>
+  useMutation<RegistrationData, RegistrationInput>(REGISTRATION);
 
-export const useLoginMutation = () => useMutation(LOGIN);
+export const useLoginMutation = () => useMutation<LoginData, LoginInput>(LOGIN);
 
 export const useLogoutMutation = () => useMutation(LOGOUT);

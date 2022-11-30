@@ -1,4 +1,5 @@
 import { NextPage, NextPageContext } from 'next';
+import { Router, useRouter } from 'next/router';
 
 import { initializeApollo } from '../../apollo';
 import {
@@ -7,6 +8,7 @@ import {
   useWorkspaceShortQuery,
 } from '../../apollo/hooks';
 import { CreateWorkspaceForm, WorkspaceItem } from '../../components/ui';
+import { Routes } from '../../constant';
 
 export async function getServerSideProps(context: NextPageContext) {
   const client = initializeApollo(null, context);
@@ -22,10 +24,18 @@ const Workspaces: NextPage = ({ initialApolloState }: any) => {
   const { data } = useWorkspaceShortQuery();
   const [changeCurrentWorkspace] = useChangeCurrentWorkspaceMutation();
 
+  const { push } = useRouter();
   const handleChangeWorkspace = (workspaceId: string) => {
     changeCurrentWorkspace({
       variables: {
-        workspaceId,
+        workspaceWhereUniqueInput: {
+          uuid: workspaceId,
+        },
+      },
+      onCompleted(data, clientOptions) {
+        if (data.changeCurrentWorkspace) {
+          push(Routes.workspaceDashboard(data.changeCurrentWorkspace.uuid));
+        }
       },
     });
   };

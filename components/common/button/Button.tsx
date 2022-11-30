@@ -34,7 +34,7 @@ const Button = forwardRef(
       className,
       btnType = 'primary',
       fullWidth = false,
-      rounded = 'none',
+      rounded = 'md',
       outline = false,
       ...props
     }: ButtonProps,

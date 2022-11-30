@@ -1,7 +1,9 @@
+import { Workspace } from 'api-types';
+
 import { Button } from '../../common';
 
 interface WorkspaceItemProps {
-  workspace: any;
+  workspace: Workspace;
   onChangeWorkspace: (workspaceId: string) => void;
 }
 

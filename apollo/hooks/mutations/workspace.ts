@@ -1,9 +1,15 @@
 import { gql, useMutation } from '@apollo/client';
+import {
+  ChangeCurrentWorkspaceData,
+  ChangeCurrentWorkspaceInput,
+  CreateWorkspaceData,
+  CreateWorkspaceInput,
+} from 'api-types';
 
 import { WorkspaceShortInfoFragment } from '../fragments';
 
 export const CREATE_WORKSPACE = gql`
-  mutation CreateWorkspace($data: WorkspaceCreateInput!) {
+  mutation CreateWorkspace($data: CreateWorkspaceInputData!) {
     createWorkspace(data: $data) {
       ...WorkspaceShortInfoFragment
     }
@@ -12,8 +18,8 @@ export const CREATE_WORKSPACE = gql`
 `;
 
 export const CHANGE_CURRENT_WORKSPACE = gql`
-  mutation ChangeCurrentWorkspace($workspaceId: String!) {
-    changeCurrentWorkspace(workspaceId: $workspaceId) {
+  mutation ChangeCurrentWorkspace($workspaceWhereUniqueInput: WorkspaceWhereUniqueInput!) {
+    changeCurrentWorkspace(workspaceWhereUniqueInput: $workspaceWhereUniqueInput) {
       ...WorkspaceShortInfoFragment
     }
   }
@@ -21,10 +27,11 @@ export const CHANGE_CURRENT_WORKSPACE = gql`
 `;
 
 export const useCreateWorkspaceMutation = () =>
-  useMutation(CREATE_WORKSPACE, {
+  useMutation<CreateWorkspaceData, CreateWorkspaceInput>(CREATE_WORKSPACE, {
     refetchQueries: ['Workspaces'],
-    variables: {},
   });
 
 export const useChangeCurrentWorkspaceMutation = () =>
-  useMutation(CHANGE_CURRENT_WORKSPACE);
+  useMutation<ChangeCurrentWorkspaceData, ChangeCurrentWorkspaceInput>(
+    CHANGE_CURRENT_WORKSPACE
+  );

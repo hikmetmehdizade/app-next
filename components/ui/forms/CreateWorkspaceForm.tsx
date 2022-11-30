@@ -28,7 +28,11 @@ const CreateWorkspaceForm = () => {
 
   const onSubmit: SubmitHandler<CreateWorkspaceValues> = (data) => {
     createWorkspace({
-      variables: {},
+      variables: {
+        data: {
+          name: data.name,
+        },
+      },
       onCompleted: (data) => {
         if (typeof data?.createWorkspace !== 'undefined') {
           reset();

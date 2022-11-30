@@ -1,4 +1,8 @@
 import { gql, useMutation } from '@apollo/client';
+import {
+  CreateWorkspaceTaskStatusData,
+  CreateWorkspaceTaskStatusInput,
+} from 'api-types';
 
 const CREATE_WORKSPACE_TASK_STATUS = gql`
   mutation CreateWorkspaceTaskStatus($data: WorkspaceTaskStatusCreateInput!) {
@@ -9,4 +13,6 @@ const CREATE_WORKSPACE_TASK_STATUS = gql`
 `;
 
 export const useCreateWorkspaceTaskStatusMutation = () =>
-  useMutation(CREATE_WORKSPACE_TASK_STATUS);
+  useMutation<CreateWorkspaceTaskStatusData, CreateWorkspaceTaskStatusInput>(
+    CREATE_WORKSPACE_TASK_STATUS
+  );

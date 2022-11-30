@@ -26,9 +26,12 @@ const Input = forwardRef(
         className={cn('flex flex-col relative', {
           'w-full': fullWidth,
           'w-fit': !fullWidth,
+          'mt-6': typeof label !== 'undefined',
         })}
       >
-        {label && <span className="text-base font-medium">{label}</span>}
+        {label && (
+          <span className="text-base font-medium absolute -top-6 left-1">{label}</span>
+        )}
         <input
           id={id}
           ref={ref}

@@ -34,7 +34,6 @@ const Tasks: NextPage = () => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input {...register('title')} />
-
         <Button type="submit"> Create</Button>
       </form>
       <div></div>

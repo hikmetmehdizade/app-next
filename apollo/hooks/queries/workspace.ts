@@ -1,4 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
+import { WorkspacesData } from 'api-types';
 
 import { WorkspaceShortInfoFragment } from '../fragments';
 
@@ -11,4 +12,5 @@ export const GET_WORKSPACES_SHORT_INFO = gql`
   ${WorkspaceShortInfoFragment}
 `;
 
-export const useWorkspaceShortQuery = () => useQuery(GET_WORKSPACES_SHORT_INFO);
+export const useWorkspaceShortQuery = () =>
+  useQuery<WorkspacesData>(GET_WORKSPACES_SHORT_INFO);

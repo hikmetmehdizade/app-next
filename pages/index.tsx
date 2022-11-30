@@ -1,7 +1,10 @@
 import type { NextPage, NextPageContext } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useState } from 'react';
 
-import { LoginForm } from '../components/ui';
+import { useTaskSubscription } from '../apollo/hooks';
+import { Button } from '../components/common';
+import { LoginForm, RegistrationForm } from '../components/ui';
 
 export async function getStaticProps({ locale }: NextPageContext) {
   return {
@@ -18,9 +21,16 @@ export async function getStaticProps({ locale }: NextPageContext) {
 }
 
 const Home: NextPage = () => {
+  const [isRegistration, setIsRegistration] = useState(false);
+
   return (
-    <div className="flex flex-col">
-      <LoginForm />
+    <div className="flex flex-col justify-items-center items-center">
+      <div className="w-2/3">
+        {!isRegistration ? <LoginForm /> : <RegistrationForm />}
+        <Button fullWidth btnType='secondary' className='mt-5' onClick={() => setIsRegistration((prev) => !prev)}>
+          {!isRegistration ? 'Registration' : 'Login'}{' '}
+        </Button>
+      </div>
     </div>
   );
 };
