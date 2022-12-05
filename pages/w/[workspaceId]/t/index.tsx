@@ -1,7 +1,8 @@
 import { NextPage } from 'next';
+import { CreateTaskForm } from '../../../../components/ui';
 
 const Tasks: NextPage = () => {
-  return <div>444</div>;
+  return <CreateTaskForm />;
 };
 
 export default Tasks;

@@ -73,7 +73,7 @@ const LoginForm = () => {
         errormessage={errors.password?.message}
         {...register('password')}
       />
-      <Button type="submit" rounded="md" fullWidth disabled={!isValid}>
+      <Button type="submit" loading rounded="md" fullWidth disabled={!isValid}>
         Sign In
       </Button>
     </form>

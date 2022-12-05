@@ -20,7 +20,8 @@ export function createApolloClient(ctx?: NextPageContext) {
     credentials: 'include',
   });
 
-  const errorLink = onError(({ graphQLErrors, networkError }) => {
+  const errorLink = onError(({ graphQLErrors, networkError, response }) => {
+    
     if (graphQLErrors) {
       graphQLErrors.forEach(({ message, locations, path }) => {
         console.log(
@@ -61,9 +62,11 @@ export function createApolloClient(ctx?: NextPageContext) {
 
     link = from([errorLink, splitLinks]);
   }
+
+  const cache = new InMemoryCache();
   return new ApolloClient({
     link,
-    cache: new InMemoryCache(),
+    cache,
     ssrMode: typeof window === 'undefined',
     defaultOptions: {
       watchQuery: {

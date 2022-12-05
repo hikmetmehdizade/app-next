@@ -1,5 +1,13 @@
+import { Transition } from '@headlessui/react';
+import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import cn from 'classnames';
-import { ButtonHTMLAttributes, ReactNode, Ref, forwardRef } from 'react';
+import {
+  ButtonHTMLAttributes,
+  Fragment,
+  ReactNode,
+  Ref,
+  forwardRef,
+} from 'react';
 
 type ButtonType = 'primary' | 'secondary' | 'dark';
 
@@ -25,6 +33,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
   rounded?: ButtonRadius;
   outline?: boolean;
+  loading?: boolean;
 }
 
 const Button = forwardRef(
@@ -36,6 +45,7 @@ const Button = forwardRef(
       fullWidth = false,
       rounded = 'md',
       outline = false,
+      loading = false,
       ...props
     }: ButtonProps,
     ref: Ref<HTMLButtonElement>
@@ -53,7 +63,22 @@ const Button = forwardRef(
       )}
       {...props}
     >
-      {children}
+      {!loading ? (
+        children
+      ) : (
+        <Transition
+          as={Fragment}
+          show
+          enter="transition-opacity duration-75"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-150"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <ArrowPathIcon className="w-6 h-6" />
+        </Transition>
+      )}
     </button>
   )
 );
