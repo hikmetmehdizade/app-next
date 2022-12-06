@@ -10,7 +10,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input = forwardRef(
   (
-    { label, fullWidth, type, ...props }: InputProps,
+    { label, fullWidth, type, errormessage, ...props }: InputProps,
     ref: Ref<HTMLInputElement>
   ) => {
     const id = useId();
@@ -27,17 +27,23 @@ const Input = forwardRef(
           'w-full': fullWidth,
           'w-fit': !fullWidth,
           'mt-6': typeof label !== 'undefined',
+          
         })}
       >
         {label && (
-          <span className="text-base font-medium absolute -top-6 left-1">{label}</span>
+          <span className="text-base font-medium absolute -top-6 left-1">
+            {label}
+          </span>
         )}
         <input
           id={id}
           ref={ref}
           type={!isVisible ? type : 'text'}
           className={cn(
-            'rounded-lg border border-gray-300 bg-white  px-4 py-3 text-base font-medium outline-0 focus:border-primary disabled:bg-gray-200 w-full'
+            'rounded-lg border border-gray-300 bg-white  px-4 py-3 text-base font-medium outline-0 focus:border-primary disabled:bg-gray-200 w-full',
+            {
+              'border-red-600 focus:border-red-600': errormessage && errormessage.length > 0,
+            }
           )}
           {...props}
         />
@@ -60,6 +66,7 @@ const Input = forwardRef(
             )}
           </button>
         )}
+        {errormessage && <span className='font-medium absolute -bottom-6 left-1 text-red-600'>{errormessage}</span>}
       </label>
     );
   }

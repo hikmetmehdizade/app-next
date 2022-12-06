@@ -42,7 +42,7 @@ const Button = forwardRef(
       children,
       className,
       btnType = 'primary',
-      fullWidth = false,
+      fullWidth = true,
       rounded = 'md',
       outline = false,
       loading = false,
@@ -53,12 +53,13 @@ const Button = forwardRef(
     <button
       ref={ref}
       className={cn(
-        'w-fit py-3.5 px-10 text-base font-semibold disabled:opacity-70',
+        'py-3.5 px-10 h-fit text-base font-semibold disabled:opacity-70',
         BUTTON_TYPE[btnType](outline),
         BUTTON_RADIUS[rounded],
         className,
         {
           'w-full': fullWidth,
+          'w-fit': !fullWidth,
         }
       )}
       {...props}
@@ -66,18 +67,9 @@ const Button = forwardRef(
       {!loading ? (
         children
       ) : (
-        <Transition
-          as={Fragment}
-          show
-          enter="transition-opacity duration-75"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="transition-opacity duration-150"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <ArrowPathIcon className="w-6 h-6" />
-        </Transition>
+        <div className='flex justify-center'>
+          <ArrowPathIcon className="animate-spin w-6 h-6" />
+        </div>
       )}
     </button>
   )

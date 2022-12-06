@@ -21,7 +21,6 @@ export function createApolloClient(ctx?: NextPageContext) {
   });
 
   const errorLink = onError(({ graphQLErrors, networkError, response }) => {
-    
     if (graphQLErrors) {
       graphQLErrors.forEach(({ message, locations, path }) => {
         console.log(

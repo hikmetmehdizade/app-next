@@ -17,7 +17,7 @@ const LoginForm = () => {
   const { t } = useTranslation(['auth']);
   const { push } = useRouter();
 
-  const [login] = useLoginMutation();
+  const [login, {loading}] = useLoginMutation();
 
   const loginSchema = yup.object({
     email: yup.string().email().required(t('auth:emailRequired')),
@@ -73,7 +73,7 @@ const LoginForm = () => {
         errormessage={errors.password?.message}
         {...register('password')}
       />
-      <Button type="submit" loading rounded="md" fullWidth disabled={!isValid}>
+      <Button type="submit" loading={loading} rounded="md" fullWidth disabled={!isValid}>
         Sign In
       </Button>
     </form>

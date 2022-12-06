@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import { useEffect } from 'react';
 
 import { useWorkspaceMembersLazyQuery } from '../../../../apollo/hooks';
-import { WorkspaceMemberCard } from '../../../../components/ui';
+import { InviteUserToWorkspaceForm, WorkspaceMemberCard } from '../../../../components/ui';
 
 const Members: NextPage = () => {
   const [getWorkspaceMembers, { data: membersData }] =
@@ -14,6 +14,7 @@ const Members: NextPage = () => {
 
   return (
     <div>
+      <InviteUserToWorkspaceForm />
       {membersData?.workspaceMembers &&
         membersData.workspaceMembers.map((item) => (
           <WorkspaceMemberCard key={item.uuid} member={item} />
